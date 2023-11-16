@@ -6,7 +6,25 @@ services:
       - ./dataset:/docker-entrypoint-initdb.d
     ports:
       - "5432:5432"
+    networks:
+      - default
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
       POSTGRES_DB: person
+  helloNative:
+    image: dream.fjh/example/hellospringnative
+    restart: always
+    ports:
+      - "8081:8081"
+    depends_on:
+      - postgres
+    networks:
+      - default
+    environment:
+      - DB_URL=postgres:5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+
+networks:
+  default:
