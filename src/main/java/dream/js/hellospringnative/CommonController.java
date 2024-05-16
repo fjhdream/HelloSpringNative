@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CommonController {
 
-    private PersonRepository personRepository;
+    private final PersonRepository personRepository;
 
     public CommonController(@Autowired PersonRepository personRepository) {
         this.personRepository = personRepository;
