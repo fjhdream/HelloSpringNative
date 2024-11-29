@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
+        <version>3.4.0</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>dream.js</groupId>
@@ -16,6 +16,7 @@
     <properties>
         <java.version>21</java.version>
         <spring-boot.build-image.imageName>dream.fjh/example/hellospringnative</spring-boot.build-image.imageName>
+        <hibernate.version>6.5.2.Final</hibernate.version>
     </properties>
     <dependencies>
         <dependency>
@@ -102,15 +103,23 @@
             <plugin>
                 <groupId>org.graalvm.buildtools</groupId>
                 <artifactId>native-maven-plugin</artifactId>
-
+                <configuration>
+                    <!-- imageName用于设置生成的二进制文件名称 -->
+                    <imageName>${project.artifactId}</imageName>
+                    <!-- mainClass用于指定main方法类路径 -->
+                    <mainClass>dream.js.hellospringnative.HelloSpringNativeApplication</mainClass>
+                    <buildArgs>
+                        --no-fallback
+                    </buildArgs>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <image>
-                        <builder>dashaun/builder:tiny</builder>
-                    </image>
+<!--                    <image>-->
+<!--                        <builder>dashaun/builder:tiny</builder>-->
+<!--                    </image>-->
                     <excludes>
                         <exclude>
                             <groupId>org.projectlombok</groupId>
